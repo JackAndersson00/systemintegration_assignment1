@@ -17,12 +17,11 @@ def main():
                 print("\n")
             i += 1
 
-
         print("\n")
         in_num = input("Pick a program or write stop to exit: ")
         print("\n")
         if in_num == "stop":
-            running = False
+            break
             # Takes the users chosen channel and gets its description and schedule
         print(first_page["channels"][int(in_num)]["tagline"])
         print(first_page["channels"][int(in_num)]["siteurl"])
