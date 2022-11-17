@@ -15,7 +15,8 @@ def main():
             print("  | ", f"{i}: ", first_page["channels"][i]["name"], end="")
             if i % 7 == 0:
                 print("\n")
-            i = i + 1
+            i += 1
+
 
         print("\n")
         in_num = input("Pick a program or write stop to exit: ")
@@ -47,7 +48,7 @@ def main():
                 print(start_time, end="")
                 print(" - ", end_time)
                 print(schedule["schedule"][i]["description"], "\n")
-            i = i + 1
+            i += 1
         input("Click enter to return ")
 
 
