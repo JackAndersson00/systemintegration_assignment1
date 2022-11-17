@@ -21,9 +21,10 @@ def main():
         print("\n")
         in_num = input("Pick a program or write stop to exit: ")
         if in_num == "stop":
-            running = False
+            break
             # Takes the users chosen channel and gets its description and schedule
         print(first_page["channels"][int(in_num)]["tagline"])
+        print("Here is the link to the Radio!")
         print(first_page["channels"][int(in_num)]["siteurl"])
         schedule_url_dict = first_page["channels"][int(in_num)]["scheduleurl"]
 
