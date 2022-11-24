@@ -1,6 +1,7 @@
 import requests
 import datetime
 import re
+
 # One request to save SR some computing power
 response = requests.get("https://api.sr.se/api/v2/channels/?format=json&pagination=false")
 channel_list = response.json()
@@ -10,16 +11,19 @@ def display_channels():
     i = 0
     length_of_schedule = len(channel_list["channels"])
     while i < length_of_schedule:  # Displays all the channels
-        print("  | ", f"{i}: ", channel_list["channels"][i]["name"], end="")
-        if i % 7 == 0:
+        print("   ", f"[{i + 1}: ", channel_list["channels"][i]["name"], "]", end="")
+        if i % 9 == 0:
             print("\n")
         i += 1
 
     print("\n")
     user_input = input("Pick a channel: ")
     print("\n")
-    if user_input.isnumeric() & int(user_input) >= 0 & int(user_input) <= 51:
-        display_schedule(int(user_input))
+    if user_input.isnumeric() & 0 <= int(user_input) - 1 <= 51:
+        display_schedule(int(user_input) - 1)
+
+    print(f"{user_input} is not a valid channel!\n")
+    display_channels()
 
 
 def display_schedule(user_input):
@@ -55,6 +59,7 @@ def display_schedule(user_input):
         i += 1
     user_input = input("Click enter to return or exit to close the program: ")
     if user_input != "exit":
+        print("\n")
         display_channels()
 
 
