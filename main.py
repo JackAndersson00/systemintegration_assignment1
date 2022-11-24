@@ -35,17 +35,21 @@ def main():
         length = len(schedule["schedule"])
         print("\n")
         i = 0
+        current_program = 0
         while i < length:  # Prints the rest of the days programs
-            start = schedule["schedule"][i]["starttimeutc"]
-            start = re.sub(r"\D", "", start)
-            start_time = datetime.datetime.fromtimestamp(int(start) / 1000)
-            if start_time >= datetime.datetime.now():
-                end = schedule["schedule"][i]["endtimeutc"]
-                end = re.sub(r"\D", "", end)
-                end_time = datetime.datetime.fromtimestamp(int(end) / 1000)
+            end = schedule["schedule"][i]["endtimeutc"]
+            end = re.sub(r"\D", "", end)
+            end_time = datetime.datetime.fromtimestamp(int(end) / 1000)
+            if end_time >= datetime.datetime.now():
+                if current_program == 0:
+                    print("Currently running: ", end="")
+                    current_program += 1
+                start = schedule["schedule"][i]["starttimeutc"]
+                start = re.sub(r"\D", "", start)
+                start_time = datetime.datetime.fromtimestamp(int(start) / 1000)
                 print(schedule["schedule"][i]["title"], end="  |  ")
-                print(start_time, end="")
-                print(" - ", end_time)
+                print(start_time.strftime("%H:%M"), end="")
+                print(" -", end_time.strftime("%H:%M"))
                 print(schedule["schedule"][i]["description"], "\n")
             i += 1
         input("Click enter to return ")
