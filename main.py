@@ -7,37 +7,37 @@ def main():
     running = True
     while running:
         response = requests.get("https://api.sr.se/api/v2/channels/?format=json&pagination=false")
-        first_page = response.json()
+        channel_list = response.json()
 
         i = 0
-        length = len(first_page["channels"])
-        while i < length:  # Displays all the channels
-            print("  | ", f"{i}: ", first_page["channels"][i]["name"], end="")
+        length_of_schedule = len(channel_list["channels"])
+        while i < length_of_schedule:  # Displays all the channels
+            print("  | ", f"{i}: ", channel_list["channels"][i]["name"], end="")
             if i % 7 == 0:
                 print("\n")
             i += 1
 
         print("\n")
-        in_num = input("Pick a program or write stop to exit: ")
+        user_input = input("Pick a program or write stop to exit: ")
         print("\n")
-        if in_num == "stop":
+        if user_input == "stop":
             break
             # Takes the users chosen channel and gets its description and schedule
-        print(first_page["channels"][int(in_num)]["tagline"])
+        print(channel_list["channels"][int(user_input)]["tagline"])
         print("Here is the link to the Radio!")
-        print(first_page["channels"][int(in_num)]["siteurl"])
-        schedule_url_dict = first_page["channels"][int(in_num)]["id"]
+        print(channel_list["channels"][int(user_input)]["siteurl"])
+        schedule_url = channel_list["channels"][int(user_input)]["id"]
 
         # requests with get the schedule with the id
         schedule_response = requests.get(
-            f"https://api.sr.se/v2/scheduledepisodes?channelid={schedule_url_dict}&format=json&pagination=false")
+            f"https://api.sr.se/v2/scheduledepisodes?channelid={schedule_url}&format=json&pagination=false")
         schedule = schedule_response.json()
 
-        length = len(schedule["schedule"])
+        length_of_schedule = len(schedule["schedule"])
         print("\n")
         i = 0
         current_program = 0
-        while i < length:  # Prints the rest of the days programs
+        while i < length_of_schedule:  # Prints the rest of the days programs
             end = schedule["schedule"][i]["endtimeutc"]
             end = re.sub(r"\D", "", end)
             end_time = datetime.datetime.fromtimestamp(int(end) / 1000)
